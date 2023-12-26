@@ -60,7 +60,7 @@ class Player(Entity):
 
 
     def import_player_assets(self):
-        character_path = 'resources/images/graphics/player/'
+        character_path = 'resources/images/graphics/knight/animations/'
         self.animations = {'up': [], 'down': [], 'left': [], 'right': [],
                            'right_idle': [], 'left_idle': [], 'up_idle': [], 'down_idle': [],
                            'right_attack': [], 'left_attack': [], 'up_attack': [], 'down_attack': []}

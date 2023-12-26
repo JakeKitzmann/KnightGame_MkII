@@ -7,9 +7,13 @@ class UI:
         self.display_surface = pygame.display.get_surface()
         self.font = pygame.font.Font(UI_FONT, UI_FONT_SIZE)
 
+        # character icon
+        self.icon_surface = pygame.image.load('resources/images/graphics/knight/icon.png')
+        self.icon_rect = self.icon_surface.get_rect(topleft = (10, 10))
+
         # bar setup
-        self.health_bar_rect = pygame.Rect(10,10,HEALTH_BAR_WIDTH, BAR_HEIGHT)
-        self.energy_bar_rect = pygame.Rect(10,34, ENERGY_BAR_WIDTH, BAR_HEIGHT)
+        self.health_bar_rect = pygame.Rect(60,10,HEALTH_BAR_WIDTH, BAR_HEIGHT)
+        self.energy_bar_rect = pygame.Rect(60,34, ENERGY_BAR_WIDTH, BAR_HEIGHT)
 
         # convert weapon dictionary
         self.weapon_graphics = []
@@ -38,6 +42,8 @@ class UI:
         # draw bar
         pygame.draw.rect(self.display_surface, color, current_rect)
         pygame.draw.rect(self.display_surface, UI_BORDER_COLOR, bg_rect, 3)
+
+        self.display_surface.blit(self.icon_surface, self.icon_rect)
 
     def show_exp(self, exp):
         text_surf = self.font.render(str(int(exp)), False, TEXT_COLOR)

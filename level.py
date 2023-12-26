@@ -11,10 +11,12 @@ from enemy import Enemy
 from particles import AnimationPlayer
 from magic import MagicPlayer
 from upgrade import Upgrade
-from main_menu import MainMenu
+from menu import Menu
 
 class Level:
     def __init__(self, u=UI()):
+
+        self.game_start = True
 
         #  get display surface
         self.display_surface = pygame.display.get_surface()
@@ -38,7 +40,9 @@ class Level:
         # game over
         self.game_over = False
         self.new_game = False
-        self.MainMenu = MainMenu()
+
+        # menu
+        self.menu = Menu()
 
 
         # particles
@@ -155,21 +159,30 @@ class Level:
 
 
     def run(self):
-        self.visible_sprites.custom_draw(self.player)
-        self.ui.display(self.player)
 
-        if self.game_paused:
-            self.upgrade.display()
+        if self.game_start:
+            if self.menu.display():
+                self.game_start = False
+
         else:
-            self.visible_sprites.update()
-            self.visible_sprites.enemy_update(self.player)
-            self.check_player_death()
-            self.player_attack_logic()
 
-        if self.game_over:
-            if self.MainMenu.display():
-                self.game_over = False
-                self.new_game = True
+            self.visible_sprites.custom_draw(self.player)
+            self.ui.display(self.player)
+
+            if self.game_paused:
+                self.upgrade.display()
+            else:
+                self.visible_sprites.update()
+                self.visible_sprites.enemy_update(self.player)
+                self.check_player_death()
+                self.player_attack_logic()
+
+            if self.game_over:
+                if self.menu.display():
+                    self.game_over = False
+                    self.new_game = True
+
+
 
     def destroy_attack(self):
             if self.current_attack:
